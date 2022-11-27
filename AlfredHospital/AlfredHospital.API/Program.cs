@@ -1,4 +1,5 @@
 using AlfredHospital.API.Data;
+using AlfredHospital.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,10 @@ builder.Services.AddDbContext<AlfredHospitalsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("AlfredHospitals"));
 });
+
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly); //automapper will look for all profiles
 
 var app = builder.Build();
 
